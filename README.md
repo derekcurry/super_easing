@@ -32,3 +32,5 @@ Based on the Arduino easing functions by T-K-233:
 
 And easing equations by Andrey Sitnik and Ivan Solovev:
   * https://easings.net/ 
+
+This code was developed for a project that has received funding from the European Union’s framework Horizon 2020 for research and innovation programme under grant agreement No 951962.
