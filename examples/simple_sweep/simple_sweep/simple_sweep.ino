@@ -41,7 +41,7 @@
 // Variables for not using a delay()
 // For a thorough explaination of this see: https://learn.adafruit.com/multi-tasking-the-arduino-part-1/ditch-the-delay
 unsigned long lastGlobalUpdate;
-long globalUpdateInterval = 5000;
+long globalUpdateInterval = 1500; // change to modify time between sweeps
 
 // Initialize the Easer (one for each servo)
 Easer my_servo(5, "cubic", 2);
