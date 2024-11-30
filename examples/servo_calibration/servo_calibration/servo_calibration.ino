@@ -18,6 +18,18 @@
   * And easing equations by Andrey Sitnik and Ivan Solovev
   * https://easings.net/ 
 
+  ***** easing type options ******
+  - CUBIC
+  - QUADRATIC
+  - QUARTIC
+  - QUINTIC
+  - SINE
+  - CIRCULAR
+  - EXPONENTIAL
+  - ELASTIC
+  - OVERSHOOT
+  - BOUNCE
+
   Find the min, max, and mid-points for a servo motor
   
   This example follows the Arduino input basics tutorial
@@ -43,7 +55,7 @@ int servoValue = 0;
 boolean newData = false;
 
 // Initialize the Easer (one for each servo)
-Easer my_servo(5, "cubic");
+Easer my_servo(5, CUBIC);
 /*****************************************************************
     Easer class vairables:
       (interval, type-of-easing, easing-motion, min-servo-position, max-servo-position, servo-midpoint)
