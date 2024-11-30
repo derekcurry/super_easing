@@ -9,7 +9,7 @@
   - Max, Min, Mid points of the servo
   - 30 different easing options (10 types, 3 motions for each type)
 
-  Febuary 2024
+  Febuary 2024 / Updated November 2024
   by Derek Curry
   Released under the GPLv3 license (Do anything you like except distribute closed source versions)
 
@@ -19,16 +19,16 @@
   * https://easings.net/ 
 
   ***** easing type options ******
-  - Cubic: "cubic"
-  - Quadratic:"quadratic"
-  - Quartic: "quartic"
-  - Quintic:"quintic"
-  - Sine: "sine"
-  - Circular: "circular"
-  - Exponential: "exponential"
-  - Elastic: "elastic"
-  - Overshoot: "overshoot"
-  - Bounce: "bounce"
+  - CUBIC
+  - QUADRATIC
+  - QUARTIC
+  - QUINTIC
+  - SINE
+  - CIRCULAR
+  - EXPONENTIAL
+  - ELASTIC
+  - OVERSHOOT
+  - BOUNCE
 
   ***** easing motion options ******
   ease-out:    0 
@@ -44,11 +44,11 @@ unsigned long lastGlobalUpdate;
 long globalUpdateInterval = 5000;
 
 // Array of easing types
-char easings[][32] = {"cubic", "quadratic", "quartic", "quintic", "sine"};
+int easings[6] = {CUBIC, QUADRATIC, QUARTIC, QUINTIC, SINE, CIRCULAR};
 int type = 0;
 int movement = 0;
 // Initialize the Easer (one for each servo)
-Easer my_servo(5, "cubic", 2);
+Easer my_servo(5, CUBIC, 2);
 /*****************************************************************
     Easer class vairables:
       (interval, type-of-easing, easing-motion, min-servo-position, max-servo-position, servo-midpoint)
@@ -88,11 +88,24 @@ void loop() {
         }
       }
       //Serial.println(easings[type]);
-      strcpy(my_servo.ease_type, easings[type]);  // Assign the new easing type
+      my_servo.ease_type = easings[type];  // Assign the new easing type
       my_servo.motion = movement; // Assign the motion type (1: ease-in, 2: ease-out, 3: ease-in-out)
 
       
-      Serial.print(my_servo.ease_type);
+      Serial.print(easings[my_servo.ease_type]);
+      if(easings[type] == 1) {
+        Serial.print(" CUBIC ");
+      } else if (easings[type] == 2) {
+        Serial.print(" QUADRATIC ");
+      } else if (easings[type] == 3) {
+        Serial.print(" QUARTIC ");
+      } else if (easings[type] == 4) {
+        Serial.print(" QUINTIC ");
+      } else if (easings[type] == 5) {
+        Serial.print(" SINE ");
+      } else if (easings[type] == 6) {
+        Serial.print(" CIRCULAR");
+      }
       Serial.print(" ");
       Serial.print(my_servo.motion);
       Serial.print(" ");
