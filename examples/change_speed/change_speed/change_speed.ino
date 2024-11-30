@@ -9,7 +9,7 @@
   - Max, Min, Mid points of the servo
   - 30 different easing options (10 types, 3 motions for each type)
 
-  Febuary 2024
+  Febuary 2024 / Updated November 2024
   by Derek Curry
   Released under the GPLv3 license (Do anything you like except distribute closed source versions)
 
@@ -19,16 +19,16 @@
   * https://easings.net/ 
 
   ***** easing type options ******
-  - Cubic: "cubic"
-  - Quadratic:"quadratic"
-  - Quartic: "quartic"
-  - Quintic:"quintic"
-  - Sine: "sine"
-  - Circular: "circular"
-  - Exponential: "exponential"
-  - Elastic: "elastic"
-  - Overshoot: "overshoot"
-  - Bounce: "bounce"
+  - CUBIC
+  - QUADRATIC
+  - QUARTIC
+  - QUINTIC
+  - SINE
+  - CIRCULAR
+  - EXPONENTIAL
+  - ELASTIC
+  - OVERSHOOT
+  - BOUNCE
 
   ***** easing motion options ******
   ease-out:    0 
@@ -46,7 +46,7 @@ long globalUpdateInterval = 5000;
 // Variable for the servo speed:
 int servo_speed = 1;
 // Initialize the Easer (one for each servo)
-Easer my_servo(servo_speed, "cubic", 2);
+Easer my_servo(servo_speed, CUBIC, 2);
 
 void setup() { 
   Serial.begin(115200);
