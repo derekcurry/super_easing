@@ -6,6 +6,18 @@
 
 // ---- Easer class -----
 class Easer {
+
+  #define CUBIC 1
+  #define QUADRATIC 2
+  #define QUARTIC 3
+  #define QUINTIC 4
+  #define SINE 5
+  #define CIRCULAR 6
+  #define EXPONENTIAL 7
+  #define ELASTIC 8
+  #define OVERSHOOT 9
+  #define BOUNCE 10
+
   Servo servo;          // the servo
   int pos = 1000;       // current servo position 
   int startPos;         // Where the movement is starting from
@@ -173,16 +185,16 @@ public:
   int dest;      // final destination of the servo
   float linear = 0;
   float lineUpdate = 0.005;
-  char ease_type[12];  // Easing function to use
+  int ease_type;  // Easing function to use
   int motion; // 0: out | 1: in | 2: in-out
   int  updateInterval;      // interval between updates
 
-  Easer(int interval=5, char e_type[12]="cubic", int m=0, int min=550, int max=2400, int mid=1500) {
+  Easer(int interval=5, int e_type=CUBIC, int m=0, int min=550, int max=2400, int mid=1500) {
     dest = sMid;
     updateInterval = interval;
     increment = 1;
+    ease_type = e_type;
 
-    strcpy(ease_type, e_type);
     motion = m;
     sMin = min;
     sMax = max;
@@ -213,7 +225,7 @@ public:
         // Increasing *********************************************************
         if(startPos < dest) {
           // Check easing type  ------
-          if (strcmp(ease_type,"cubic")==0) {  // Cubic -----------------------
+          if (ease_type==CUBIC) {  // Cubic -----------------------
             switch (motion) {
               case 0:
                 pos = (startPos + (int)(easeOutCubic(linear)*(dest-startPos)));
@@ -225,7 +237,7 @@ public:
                 pos = (startPos + (int)(easeInOutCubic(linear)*(dest-startPos)));
                 break;
             }
-          } else if (strcmp(ease_type,"quadratic")==0) {  // Quadratic ----------
+          } else if (ease_type==QUADRATIC) {  // Quadratic ----------
             switch (motion) {
               case 0:
                 pos = (startPos + (int)(easeOutQuadratic(linear)*(dest-startPos)));
@@ -237,7 +249,7 @@ public:
                 pos = (startPos + (int)(easeInOutQuadratic(linear)*(dest-startPos)));
                 break;
             }
-          } else if (strcmp(ease_type,"quartic")==0) {  // Quartic --------------
+          } else if (ease_type==QUARTIC) {  // Quartic --------------
             switch (motion) {
               case 0:
                 pos = (startPos + (int)(easeOutQuartic(linear)*(dest-startPos)));
@@ -249,7 +261,7 @@ public:
                 pos = (startPos + (int)(easeInOutQuartic(linear)*(dest-startPos)));
                 break;
             }
-          } else if (strcmp(ease_type,"quintic")==0) {  // Quintic --------------
+          } else if (ease_type==QUINTIC) {  // Quintic --------------
             switch (motion) {
               case 0:
                 pos = (startPos + (int)(easeOutQuintic(linear)*(dest-startPos)));
@@ -261,7 +273,7 @@ public:
                 pos = (startPos + (int)(easeInOutQuintic(linear)*(dest-startPos)));
                 break;
             }
-          } else if (strcmp(ease_type,"sine")==0) {  // Sine -----------------
+          } else if (ease_type==SINE) {  // Sine -----------------
             switch (motion) {
               case 0:
                 pos = (startPos + (int)(easeOutSine(linear)*(dest-startPos)));
@@ -273,7 +285,7 @@ public:
                 pos = (startPos + (int)(easeInOutSine(linear)*(dest-startPos)));
                 break;
             }
-          } else if (strcmp(ease_type,"circular")==0) {  // Circular -----------------
+          } else if (ease_type==CIRCULAR) {  // Circular -----------------
             switch (motion) {
               case 0:
                 pos = (startPos + (int)(easeOutCircular(linear)*(dest-startPos)));
@@ -285,7 +297,7 @@ public:
                 pos = (startPos + (int)(easeInOutCircular(linear)*(dest-startPos)));
                 break;
             }
-          } else if (strcmp(ease_type,"exponential")==0) {  // Exponential -----------------
+          } else if (ease_type==EXPONENTIAL) {  // Exponential -----------------
             switch (motion) {
               case 0:
                 pos = (startPos + (int)(easeOutExponential(linear)*(dest-startPos)));
@@ -297,7 +309,7 @@ public:
                 pos = (startPos + (int)(easeInOutExponential(linear)*(dest-startPos)));
                 break;
             }
-          } else if (strcmp(ease_type,"elastic")==0) {  // Elastic -----------------
+          } else if (ease_type==ELASTIC) {  // Elastic -----------------
             switch (motion) {
               case 0:
                 pos = (startPos + (int)(easeOutElastic(linear)*(dest-startPos)));
@@ -309,7 +321,7 @@ public:
                 pos = (startPos + (int)(easeInOutElastic(linear)*(dest-startPos)));
                 break;
             }
-          } else if (strcmp(ease_type,"overshoot")==0) {  // Overshoot -----------------
+          } else if (ease_type==OVERSHOOT) {  // Overshoot -----------------
             switch (motion) {
               case 0:
                 pos = (startPos + (int)(easeOutBack(linear)*(dest-startPos)));
@@ -321,7 +333,7 @@ public:
                 pos = (startPos + (int)(easeInOutBack(linear)*(dest-startPos)));
                 break;
             }
-          } else if (strcmp(ease_type,"bounce")==0) {  // Bounce -----------------
+          } else if (ease_type==BOUNCE) {  // Bounce -----------------
             switch (motion) {
               case 0:
                 pos = (startPos + (int)(easeOutBounce(linear)*(dest-startPos)));
@@ -345,7 +357,7 @@ public:
           */
         } else if(startPos > dest) { // Decreasing ******************************
 
-          if (strcmp(ease_type,"cubic")==0) {  // Cubic -----------------------
+          if (ease_type==CUBIC) {  // Cubic -----------------------
             switch (motion) {
               case 0:
                 pos = (startPos - (int)(easeOutCubic(linear)*(startPos-dest)));
@@ -357,7 +369,7 @@ public:
                 pos = (startPos - (int)(easeInOutCubic(linear)*(startPos-dest)));
                 break;
             }
-          } else if (strcmp(ease_type,"quadratic")==0) {  // Quadratic ---------
+          } else if (ease_type==QUADRATIC) {  // Quadratic ---------
             switch (motion) {
               case 0:
                 pos = (startPos - (int)(easeOutQuadratic(linear)*(startPos-dest)));
@@ -369,7 +381,7 @@ public:
                 pos = (startPos - (int)(easeInOutQuadratic(linear)*(startPos-dest)));
                 break;
             }
-          } else if (strcmp(ease_type,"quartic")==0) {  // Quartic  -------------
+          } else if (ease_type==QUARTIC) {  // Quartic  -------------
             switch (motion) {
               case 0:
                 pos = (startPos - (int)(easeOutQuartic(linear)*(startPos-dest)));
@@ -381,7 +393,7 @@ public:
                 pos = (startPos - (int)(easeInOutQuartic(linear)*(startPos-dest)));
                 break;
             }
-          } else if (strcmp(ease_type,"quintic")==0) {  // Quintic  -------------
+          } else if (ease_type==QUINTIC) {  // Quintic  -------------
             switch (motion) {
               case 0:
                 pos = (startPos - (int)(easeOutQuintic(linear)*(startPos-dest)));
@@ -393,7 +405,7 @@ public:
                 pos = (startPos - (int)(easeInOutQuintic(linear)*(startPos-dest)));
                 break;
             }
-          } else if (strcmp(ease_type,"sine")==0) {  // Sine  ----------------
+          } else if (ease_type==SINE) {  // Sine  ----------------
             switch (motion) {
               case 0:
                 pos = (startPos - (int)(easeOutSine(linear)*(startPos-dest)));
@@ -405,7 +417,7 @@ public:
                 pos = (startPos - (int)(easeInOutSine(linear)*(startPos-dest)));
                 break;
             }
-          } else if (strcmp(ease_type,"circular")==0) {  // Circular  ----------------
+          } else if (ease_type==CIRCULAR) {  // Circular  ----------------
             switch (motion) {
               case 0:
                 pos = (startPos - (int)(easeOutCircular(linear)*(startPos-dest)));
@@ -417,7 +429,7 @@ public:
                 pos = (startPos - (int)(easeInOutCircular(linear)*(startPos-dest)));
                 break;
             }
-          } else if (strcmp(ease_type,"exponential")==0) {  // Exponential  ----------------
+          } else if (ease_type==EXPONENTIAL) {  // Exponential  ----------------
             switch (motion) {
               case 0:
                 pos = (startPos - (int)(easeOutExponential(linear)*(startPos-dest)));
@@ -429,7 +441,7 @@ public:
                 pos = (startPos - (int)(easeInOutExponential(linear)*(startPos-dest)));
                 break;
             }
-          } else if (strcmp(ease_type,"elastic")==0) {  // Elastic  ----------------
+          } else if (ease_type==ELASTIC) {  // Elastic  ----------------
             switch (motion) {
               case 0:
                 pos = (startPos - (int)(easeOutElastic(linear)*(startPos-dest)));
@@ -441,7 +453,7 @@ public:
                 pos = (startPos - (int)(easeInOutElastic(linear)*(startPos-dest)));
                 break;
             }
-          } else if (strcmp(ease_type,"overshoot")==0) {  // Overshoot  ----------------
+          } else if (ease_type==OVERSHOOT) {  // Overshoot  ----------------
             switch (motion) {
               case 0:
                 pos = (startPos - (int)(easeOutBack(linear)*(startPos-dest)));
@@ -453,7 +465,7 @@ public:
                 pos = (startPos - (int)(easeInOutBack(linear)*(startPos-dest)));
                 break;
             }
-          } else if (strcmp(ease_type,"bounce")==0) {  // Bounce  ----------------
+          } else if (ease_type==BOUNCE) {  // Bounce  ----------------
             switch (motion) {
               case 0:
                 pos = (startPos - (int)(easeOutBounce(linear)*(startPos-dest)));
@@ -483,6 +495,5 @@ public:
     }
   }
 };
-
 
 #endif
